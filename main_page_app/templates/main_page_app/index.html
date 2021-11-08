@@ -1,0 +1,47 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel = "stylesheet" type = "text/css" href = "{% static 'main_page_app/css/style.css' %}">
+    <script src = "{% static 'main_page_app/src/video.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+    <h1>Test page.</h1>
+{% endblock %}
+
+{% block content %}
+
+<div>
+<table align="center">
+{% for clip in clips %}
+    <tr>
+        <td>
+            <div class="w3-container w3-white w3-margin w3-padding-large">
+            <div class="w3-justify">
+                <h3 style="text-align: left">{{ clip.title }}</h3>
+            </div>
+
+            <div class="w3-justify" style="text-align: right;">
+                <div class="mydiv; w3-padding-16">
+                    <video id="{{ clip.title }}" width="400" height="300" controls="controls" onmouseover="playVideo('{{ clip.title }}')" onmouseout="stopVideo('{{ clip.title }}')" muted>
+                        <source src="{{ clip.file.url }}">
+                        Тег video не поддерживается вашим браузером. 
+                    </video>
+                </div>
+                <p>{{ clip.content }}</p>
+                <hr>
+                <h6>Опубликовано, <span class="w3-opacity">{{ clip.published }}</span></h5>
+                <h6>Тема: <a href="{% url 'ph_theme' clip.cliptheme.pk %}"><span class="w3-opacity">{{ clip.cliptheme }}</span></a></h5>
+                <hr>
+            </div>
+            </div>
+        </td>
+    </tr>
+{% endfor %}
+
+
+</table>
+</div>
+
+{% endblock %}
